@@ -2,50 +2,18 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
-	"github.com/gorilla/websocket"
+	"github.com/Ghersi75/GoChatLearningApp/pkg/websocket"
 )
 
-var upgrader = websocket.Upgrader {
-	ReadBufferSize: 1024,
-	WriteBufferSize: 1024,
-	// Function used to check origin of request
-	// For now just return true, but can have logic in there
-	CheckOrigin: func(r *http.Request) bool { return true },
-}
-
-func reader(conn *websocket.Conn) {
-	// I guess for is both a for and while loop
-	// In this case a while loop
-	for { 
-		messageType, msg, err := conn.ReadMessage()
-		// If there's an error log it and break out of loop
-		if err != nil {
-			log.Println(err)
-			return
-		}
-
-		fmt.Println(string(msg))
-
-		// I have no idea what this is doing honestly
-		if err := conn.WriteMessage(messageType, msg); err != nil {
-			log.Println(err)
-			return
-		}
-	}
-}
-
 func serveWebsocket(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.Host)
-
-	ws, err := upgrader.Upgrade(w, r, nil)
+	ws, err := websocket.Upgrade(w, r)
 	if err != nil {
-		log.Println(err)
+		fmt.Fprintf(w, "%+V\n", err)
 	}
-
-	reader(ws)
+	go websocket.Writer(ws)
+	websocket.Reader(ws)
 }
 
 func setupRoutes() {

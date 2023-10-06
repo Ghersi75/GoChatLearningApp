@@ -1,4 +1,4 @@
-module github.com/Ghersi75/GoChatLearningApp
+module backend
 
 go 1.21.2
 

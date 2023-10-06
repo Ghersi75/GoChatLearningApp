@@ -1,6 +1,6 @@
 const socket = new WebSocket("ws://localhost:8080/ws")
 
-export function connect() {
+export function connect(addToMsgHistory: any) {
   console.log("Attempting Connection...")
 
   socket.onopen = () => {
@@ -9,6 +9,7 @@ export function connect() {
 
   socket.onmessage = msg => {
     console.log(msg)
+    addToMsgHistory(msg)
   }
 
   socket.onclose = event => {

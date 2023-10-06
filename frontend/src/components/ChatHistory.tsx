@@ -10,8 +10,9 @@ export default function ChatHistory({
       <h2 className="text-lg font-bold"> Chat History </h2>
       {
         chatHistory.map((msg: any, index: number) => {
+          const data = JSON.parse(msg.data)
           return(
-            <p key={index} className="outline solid w-fit p-2.5">{msg.data}</p>
+            <p key={index} className="outline solid w-fit p-2.5">{data.body}</p>
           )
         })
       }

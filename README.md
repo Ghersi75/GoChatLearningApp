@@ -1,2 +1,2 @@
 # GoChatLearningApp
-Just a simple chat app with go and nextjs
+The purpose of this project is to make a simple 1 day side project to learn the very basics of golang and websockets. There's nothing complex here, and I simply followed a tutorial to make this work. The only thing that didn't work was docker. I'm not sure if the Dockerfile is even correct since I couldn't test it, but the "app" itself works as intended. It prints the messages from users, when users join, and when users leave. 
